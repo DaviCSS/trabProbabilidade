@@ -4,6 +4,33 @@ Simulador acadêmico de máquina de rolos, com **créditos fictícios** e regras
 
 **Integrantes:** preencher aqui os nomes dos integrantes antes da entrega.
 
+## 🎮 Jogar pelo navegador (GitHub Pages)
+
+**Site do simulador:** https://davicss.github.io/trabProbabilidade/
+
+A versão interativa está em [`docs/`](docs/). É um site estático (HTML, CSS e JavaScript), sem backend, login, instalação ou dinheiro real. Funciona em computador e celular, com:
+
+- Máquina de três rolos (tabuleiro 3 × 3), só com a linha central premiada.
+- Botões **Girar 1 vez**, **Simular +10** e **Reiniciar**; interação pelo teclado.
+- Saldo fictício inicial de 100 créditos, aposta fixa de 1 crédito e parada quando o saldo chega a zero ou após 500 rodadas. Reiniciar começa outra simulação, não adiciona créditos à sessão anterior.
+- Estatísticas, histórico das últimas rodadas, gráfico de saldo e comparação teoria × observação.
+
+O cálculo no navegador usa **Web Crypto**, enquanto o Python usa `random.Random`. Ambos têm as **mesmas regras e probabilidades**, mas não geram a mesma sequência, mesmo se comparados com uma semente numérica. **Os dados da sessão no site não substituem os experimentos reproduzíveis do trabalho**, que ficam no script Python e nos arquivos CSV.
+
+**Para ativar o site no GitHub:** abra *Settings → Pages* no repositório; em **Build and deployment**, escolha **Deploy from a branch**, branch **main**, pasta **/docs**, e clique em **Save**. Depois da publicação, o endereço acima poderá ser aberto. Se quiser visualizar localmente, execute `python -m http.server 8000 --directory docs` e abra `http://localhost:8000`.
+
+## 📚 Executar o Python em blocos no VS Code
+
+O arquivo **[`estudo_em_blocos.py`](estudo_em_blocos.py)** é um script Python normal com separadores `# %%`: cada separador marca uma célula independente de execução (aproveitando variáveis das células anteriores).
+
+1. Abra a pasta no **VS Code**, com as extensões **Python** e **Jupyter** instaladas.
+2. Abra `estudo_em_blocos.py` e clique em **Run Cell / Executar Célula** acima de cada `# %%`, **na ordem**.
+3. Faça um experimento de cada vez: regras e uma rodada; teoria; depois E1, E2, E3, E4 e E5. O bloco final (opcional) explica como gerar todos os gráficos e PDFs.
+
+Também é possível executar tudo de uma vez com `python estudo_em_blocos.py` no terminal. O arquivo `maquina.py` permanece como script principal, com funções separadas, para não duplicar a lógica.
+
+**Testes:** `python -m unittest discover -s tests -v` (Python), `node --test tests/test_site.mjs` (lógica web). O site não exige Node para funcionar; Node é usado **apenas** nos testes.
+
 ## Como executar
 
 Tenha Python 3.10 ou superior. No terminal, dentro da pasta deste repositório:

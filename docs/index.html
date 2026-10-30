@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#132a26">
+  <meta name="description" content="Máquina Estatística: explore o acaso, os prêmios e a perda esperada em um simulador acadêmico com créditos fictícios.">
+  <title>Máquina Estatística | IFES</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="estilos.css">
+  <script type="module" src="script.js"></script>
+</head>
+<body>
+  <a class="pular" href="#jogo">Pular para o simulador</a>
+  <header class="cabecalho">
+    <a href="#inicio" class="marca" aria-label="Máquina Estatística, início"><span class="marca-simbolo">M<span>·</span></span><span>MÁQUINA <b>ESTATÍSTICA</b></span></a>
+    <nav aria-label="Navegação principal"><a href="#jogo">Simulador</a><a href="#resultados">Análise</a><a href="#regras">Regras</a><a class="link-repo" href="https://github.com/DaviCSS/trabProbabilidade" target="_blank" rel="noopener noreferrer">Código-fonte ↗</a></nav>
+  </header>
+
+  <main id="inicio">
+    <section class="apresentacao" aria-labelledby="titulo">
+      <div class="apresentacao-texto">
+        <div class="etiqueta"><span class="ponto"></span> IFES · PROBABILIDADE E ESTATÍSTICA I</div>
+        <h1 id="titulo">A sorte é aleatória.<br><em>A matemática, não.</em></h1>
+        <p>Gire três rolos, acompanhe seu saldo e descubra por que alguns prêmios podem coexistir com uma perda média esperada.</p>
+        <a class="link-conhecer" href="#jogo">Explorar o simulador <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="destaque-matematico" aria-label="Modelo: chance de prêmio de 4%, retorno médio de 84% e perda esperada de 0,16 crédito por rodada">
+        <div class="destaque-rotulo">UMA REGRA SIMPLES. UMA DIFERENÇA IMPORTANTE.</div>
+        <div class="dupla"><div><strong>4<span>%</span></strong><small>chance de prêmio</small></div><div><strong>84<span>%</span></strong><small>retorno teórico (RTP)</small></div></div>
+        <div class="linha-matematica"><span>Lucro esperado por rodada</span><b>−0,16 crédito</b></div>
+      </div>
+    </section>
+
+    <section class="simulador" id="jogo" aria-labelledby="titulo-jogo">
+      <div class="secao-cabecalho"><div><div class="sobretitulo">01 / EXPERIMENTE</div><h2 id="titulo-jogo">O acaso em movimento.</h2></div><span class="nota-academica">SIMULADOR ACADÊMICO · SOMENTE CRÉDITOS FICTÍCIOS</span></div>
+      <div class="area-jogo">
+        <div class="maquina-painel">
+          <div class="painel-topo"><span class="luz" aria-hidden="true"></span><span>MÁQUINA / 03 ROLOS</span><span class="estado" id="estado">PRONTO</span></div>
+          <div class="visor" id="visor" aria-label="Tabuleiro de três linhas por três colunas; apenas a linha central vale prêmio">
+            <div class="faixa-centro" aria-hidden="true"></div>
+            <div class="grade" id="grade" aria-hidden="true">
+              <div class="celula">A</div><div class="celula">A</div><div class="celula">A</div>
+              <div class="celula meio">B</div><div class="celula meio">B</div><div class="celula meio">B</div>
+              <div class="celula">C</div><div class="celula">C</div><div class="celula">C</div>
+            </div>
+          </div>
+          <div class="visor-legenda"><span>↑ Linha de cima</span><b>● Linha central premiada</b><span>↓ Linha de baixo</span></div>
+          <div class="resultado-msg" id="mensagem" role="status" aria-live="polite">Pronto para começar: cada rodada custa 1 crédito.</div>
+          <div class="botoes">
+            <button type="button" class="botao-primario" id="girar">Girar 1 vez <span aria-hidden="true">↗</span></button>
+            <button type="button" class="botao-secundario" id="girar10">Simular +10</button>
+            <button type="button" class="botao-limpo" id="reiniciar">Reiniciar</button>
+          </div>
+          <p class="instrucao-teclado">Use <kbd>Enter</kbd> ou <kbd>Espaço</kbd> no botão de girar. A sessão termina em 500 rodadas ou com saldo insuficiente.</p>
+        </div>
+        <aside class="painel-numeros" aria-label="Estatísticas da sessão">
+          <div class="saldo-bloco"><span>SALDO ATUAL</span><div><strong id="saldo">100</strong><small>créditos</small></div><div class="saldo-barra"><div id="saldo-progresso" style="width:100%"></div></div><p>Você começa com 100 créditos fictícios.</p></div>
+          <div class="grade-estatisticas"><div class="dado"><span>RODADAS</span><b id="rodadas">0 <small>/ 500</small></b></div><div class="dado"><span>PRÊMIOS</span><b id="vitorias">0</b></div><div class="dado"><span>RESULTADO LÍQUIDO</span><b id="lucro">0</b></div><div class="dado"><span>RTP OBSERVADO</span><b id="rtp">—</b></div></div>
+          <div class="comparacao"><div class="comparacao-titulo">O que observar?</div><p>Receber algum prêmio não é o mesmo que ter lucro no longo prazo.</p><div class="comparacao-item"><span>Chance teórica de prêmio</span><b>4%</b></div><div class="comparacao-item"><span>RTP teórico</span><b>84%</b></div><div class="comparacao-item"><span>Vantagem esperada da casa</span><b>16%</b></div></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="analise" id="resultados" aria-labelledby="titulo-analise">
+      <div class="secao-cabecalho"><div><div class="sobretitulo">02 / OBSERVE OS DADOS</div><h2 id="titulo-analise">Uma rodada conta uma história.<br>Milhares contam outra.</h2></div><p class="secao-descricao">Os resultados abaixo usam apenas as rodadas da sua sessão, não os dados do experimento oficial do trabalho.</p></div>
+      <div class="analise-grade">
+        <article class="grafico-painel"><div class="painel-titulo"><div><h3>Trajetória do saldo</h3><p>Créditos fictícios por rodada</p></div><span id="pontos-grafico" class="marcador">0 rodadas</span></div><svg class="grafico-saldo" id="grafico-saldo" viewBox="0 0 720 250" role="img" aria-label="Gráfico de saldo ao longo das rodadas"><line x1="50" y1="35" x2="700" y2="35" class="grid-line"/><line x1="50" y1="115" x2="700" y2="115" class="grid-line"/><line x1="50" y1="195" x2="700" y2="195" class="grid-line"/><polyline id="linha-saldo" points="50,115" fill="none" class="traco-saldo"/><text id="grafico-min" x="5" y="220">0</text><text id="grafico-max" x="5" y="40">100</text><text x="50" y="244">0</text><text id="grafico-fim" x="700" y="244" text-anchor="end">0 rodadas</text></svg><p class="legenda-grafico">A linha acompanha o saldo após cada rodada; subidas representam prêmios.</p></article>
+        <article class="historico-painel"><div class="painel-titulo"><div><h3>Últimas rodadas</h3><p>Prêmio bruto e lucro líquido são coisas diferentes</p></div></div><div id="historico" class="historico-lista"><p class="vazio">Suas rodadas aparecerão aqui.</p></div></article>
+      </div>
+      <article class="frequencias-painel"><div class="painel-titulo"><div><h3>Teoria × sua observação</h3><p>Compare as frequências relativas após algumas rodadas.</p></div><span class="marcador">125 triplas possíveis</span></div><div class="tabela-wrapper"><table><thead><tr><th scope="col">Linha central</th><th scope="col">Probabilidade teórica</th><th scope="col">Contagem</th><th scope="col">Frequência observada</th></tr></thead><tbody id="tabela-frequencias"></tbody></table></div><p class="legenda-grafico">Os resultados variam de uma sessão para outra. Isso não significa que as probabilidades estejam mudando.</p></article>
+    </section>
+
+    <section class="regras" id="regras" aria-labelledby="titulo-regras"><div class="secao-cabecalho"><div><div class="sobretitulo">03 / ENTENDA AS REGRAS</div><h2 id="titulo-regras">Tudo às claras.</h2></div><p class="secao-descricao">Sem dinheiro real, sem contas, sem publicidade e sem mecanismos de apostas comerciais.</p></div><div class="regras-grade"><article class="regra-card"><div class="numero-regra">01</div><h3>Cinco símbolos, três rolos</h3><p>Cada rolo sorteia uma parada de 0 a 4 e mostra três letras consecutivas do ciclo A–B–C–D–E. Os sorteios dos três rolos são independentes.</p></article><article class="regra-card"><div class="numero-regra">02</div><h3>Só a linha central vale</h3><p>Você recebe prêmio se as três letras centrais forem iguais. Existem 5 combinações premiadas entre 125 igualmente prováveis: <strong>5/125 = 4%</strong>.</p></article><article class="regra-card"><div class="numero-regra">03</div><h3>Cada rodada custa 1</h3><p>A, B, C, D e E pagam 5, 10, 15, 25 e 50 créditos, respectivamente. O lucro líquido é o prêmio menos o crédito apostado.</p></article></div>
+      <div class="matematica-final"><div><div class="sobretitulo">POR QUE A VANTAGEM EXISTE?</div><h3>O valor esperado não é uma promessa.</h3><p>Em 125 resultados igualmente prováveis, os prêmios somam 105 créditos: <strong>E[P] = 105/125 = 0,84</strong>. Como cada rodada custa 1 crédito, <strong>E[X] = 0,84 − 1 = −0,16</strong>. Ganhos ocasionais existem mesmo com expectativa negativa.</p></div><div class="equacao"><span>ESPERANÇA DO LUCRO</span><strong>−0,16</strong><small>crédito por rodada, em média</small></div></div>
+      <div class="rodape-academico"><span>IFES · CAMPUS SERRA · 2026/2</span><span>Projeto acadêmico de Probabilidade e Estatística I · <a href="https://github.com/DaviCSS/trabProbabilidade" target="_blank" rel="noopener noreferrer">Ver código Python, experimentos e relatório ↗</a></span></div>
+    </section>
+  </main>
+</body>
+</html>
