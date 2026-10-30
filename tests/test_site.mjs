@@ -47,7 +47,7 @@ test('RTP 84% e lucro medio esperado de -0,16', () => {
     for (let b = 0; b < 5; b++)
       for (let c = 0; c < 5; c++) soma += calcularResultado([a, b, c]).premio;
   assert.equal(soma / 125, 0.84);
-  assert.equal(soma / 125 - 1, -0.16000000000000003);
+  assert.ok(Math.abs((soma / 125 - 1) - (-0.16)) < 1e-12);
 });
 
 test('sessao começa com 100 e termina em 500 rodadas', () => {

@@ -140,7 +140,7 @@ pegar('reiniciar').addEventListener('click', () => {
   pegar('mensagem').classList.remove('ganhou', 'perdeu');
   pegar('mensagem').textContent = 'Nova sessão iniciada: 100 créditos fictícios e até 500 rodadas.';
   const casas = pegar('grade').children;
-  'AAABBBCCC'.split('').forEach((simbolo, i) => { casas[i].textContent = simbolo; });
+  'ACEBDACEB'.split('').forEach((simbolo, i) => { casas[i].textContent = simbolo; });
   pegar('visor').setAttribute('aria-label', 'Tabuleiro inicial. Nenhuma rodada realizada.');
   atualizarTela();
 });
