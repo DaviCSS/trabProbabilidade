@@ -19,8 +19,6 @@ jobs:
           node --check docs/modelo.mjs
           node --check docs/script.js
           node --test tests/test_site.mjs
-      - name: Executar roteiro em blocos
-        run: python estudo_em_blocos.py
       - name: Executar e gerar PDFs
         run: |
           python maquina.py todos

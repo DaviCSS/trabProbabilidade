@@ -19,17 +19,18 @@ O cálculo no navegador usa **Web Crypto**, enquanto o Python usa `random.Random
 
 **Para ativar o site no GitHub:** abra *Settings → Pages* no repositório; em **Build and deployment**, escolha **Deploy from a branch**, branch **main**, pasta **/docs**, e clique em **Save**. Depois da publicação, o endereço acima poderá ser aberto. Se quiser visualizar localmente, execute `python -m http.server 8000 --directory docs` e abra `http://localhost:8000`.
 
-## 📚 Executar o Python em blocos no VS Code
+## 📓 Jupyter Notebook — execução célula por célula
 
-O arquivo **[`estudo_em_blocos.py`](estudo_em_blocos.py)** é um script Python normal com separadores `# %%`: cada separador marca uma célula independente de execução (aproveitando variáveis das células anteriores).
+O arquivo **[`Maquina_Estatistica.ipynb`](Maquina_Estatistica.ipynb)** é um **Jupyter Notebook real**, com células de texto (explicação) e código (execução), tabelas e gráficos **dentro do notebook**. Ele substitui o antigo roteiro com separadores `# %%`.
 
-1. Abra a pasta no **VS Code**, com as extensões **Python** e **Jupyter** instaladas.
-2. Abra `estudo_em_blocos.py` e clique em **Run Cell / Executar Célula** acima de cada `# %%`, **na ordem**.
-3. Faça um experimento de cada vez: regras e uma rodada; teoria; depois E1, E2, E3, E4 e E5. O bloco final (opcional) explica como gerar todos os gráficos e PDFs.
+1. Abra `Maquina_Estatistica.ipynb` no **VS Code (extensões Python e Jupyter)** ou no **Jupyter Notebook / JupyterLab**, ou importe o arquivo no **Google Colab**.
+2. Clique em **Executar / Run Cell** na célula **1. Preparação**. Ela define as funções simples usadas pelos experimentos.
+3. A partir daí, execute **qualquer experimento (1 a 5) separadamente**, na ordem que quiser. Cada experimento recria por semente as sequências necessárias; **não depende dos resultados das células anteriores**.
+4. Leia a explicação e a interpretação junto de cada resultado. Os gráficos também aparecem no próprio notebook, e tabelas CSV são salvas na pasta `resultados_notebook/`.
 
-Também é possível executar tudo de uma vez com `python estudo_em_blocos.py` no terminal. O arquivo `maquina.py` permanece como script principal, com funções separadas, para não duplicar a lógica.
+É preciso ter o Python com `matplotlib` instalado (`python -m pip install -r requirements.txt`). O notebook é **autossuficiente**, sem depender de importações de `maquina.py`, e também funciona após upload no Colab. Ele já contém saídas executadas como exemplo, mas todas podem ser reproduzidas. A versão de linha de comando `maquina.py` e o site em `docs/` **continuam disponíveis**.
 
-**Testes:** `python -m unittest discover -s tests -v` (Python), `node --test tests/test_site.mjs` (lógica web). O site não exige Node para funcionar; Node é usado **apenas** nos testes.
+**Testes do projeto:** `python -m unittest discover -s tests -v` (Python), `node --test tests/test_site.mjs` (lógica web).
 
 ## Como executar
 

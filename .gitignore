@@ -3,3 +3,7 @@ __pycache__/
 .venv/
 .pytest_cache/
 .DS_Store
+
+# Arquivos gerados ao executar o Jupyter Notebook
+resultados_notebook/
+.ipynb_checkpoints/
