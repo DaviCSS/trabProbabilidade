@@ -1,0 +1,228 @@
+{
+  "modelo": {
+    "simbolos": "ABCDE",
+    "pagamentos": {
+      "A": 5,
+      "B": 10,
+      "C": 15,
+      "D": 25,
+      "E": 50
+    },
+    "aposta": 1,
+    "chance_premio": 0.04,
+    "premio_esperado": 0.84,
+    "lucro_esperado": -0.16,
+    "rtp": 0.84
+  },
+  "ambiente": {
+    "python": "3.13.5",
+    "biblioteca_sorteio": "random.Random / Mersenne Twister",
+    "matplotlib": "3.10.8",
+    "semente_e1_e4_e5": 2026,
+    "sementes_e2": [
+      10,
+      2026,
+      123456
+    ],
+    "semente_e3": 42,
+    "semente_extra_exposicao": 2027
+  },
+  "experimento1": {
+    "rodadas": 10000,
+    "premios": 412,
+    "frequencia_premio": 0.0412,
+    "premio_medio": 0.8685,
+    "lucro_medio": -0.1315,
+    "rtp_observado": 0.8685,
+    "desvio_amostral": 5.275034630126602
+  },
+  "experimento2": {
+    "medias": [
+      {
+        "semente": 10,
+        "rodadas": 100,
+        "lucro_medio_acumulado": -0.7
+      },
+      {
+        "semente": 10,
+        "rodadas": 1000,
+        "lucro_medio_acumulado": -0.055
+      },
+      {
+        "semente": 10,
+        "rodadas": 10000,
+        "lucro_medio_acumulado": -0.096
+      },
+      {
+        "semente": 2026,
+        "rodadas": 100,
+        "lucro_medio_acumulado": 0.2
+      },
+      {
+        "semente": 2026,
+        "rodadas": 1000,
+        "lucro_medio_acumulado": -0.22
+      },
+      {
+        "semente": 2026,
+        "rodadas": 10000,
+        "lucro_medio_acumulado": -0.1315
+      },
+      {
+        "semente": 123456,
+        "rodadas": 100,
+        "lucro_medio_acumulado": 0.2
+      },
+      {
+        "semente": 123456,
+        "rodadas": 1000,
+        "lucro_medio_acumulado": -0.07
+      },
+      {
+        "semente": 123456,
+        "rodadas": 10000,
+        "lucro_medio_acumulado": -0.2215
+      }
+    ],
+    "primeiros10_reproduzidos": true
+  },
+  "experimento3": {
+    "participantes": 100,
+    "ganho": 0.23,
+    "empate": 0.02,
+    "perda": 0.75,
+    "esgotamento": 0.67,
+    "saldo_medio": 52.1,
+    "saldo_mediano": 0.0,
+    "rodadas_medias": 339.9
+  },
+  "experimento4": [
+    {
+      "resultado_anterior": "apos perda",
+      "total_pares": 9587,
+      "premios_rodada_seguinte": 395,
+      "proporcao": 0.041201627203504745
+    },
+    {
+      "resultado_anterior": "apos premio",
+      "total_pares": 412,
+      "premios_rodada_seguinte": 17,
+      "proporcao": 0.0412621359223301
+    }
+  ],
+  "experimento5": [
+    {
+      "tabela": "base",
+      "probabilidade_premio_teorica": 0.04,
+      "frequencia_premio_observada": 0.0412,
+      "premio_medio": 0.8685,
+      "lucro_medio": -0.1315,
+      "rtp_teorico": 0.84,
+      "rtp_observado": 0.8685
+    },
+    {
+      "tabela": "premios_mais_10_porcento",
+      "probabilidade_premio_teorica": 0.04,
+      "frequencia_premio_observada": 0.0412,
+      "premio_medio": 0.95535,
+      "lucro_medio": -0.04464999999999991,
+      "rtp_teorico": 0.9240000000000002,
+      "rtp_observado": 0.95535
+    }
+  ],
+  "extras": {
+    "intervalo_confianca": {
+      "metodo": "normal aproximado (1,96 * s / raiz(N))",
+      "N": 10000,
+      "lucro_medio": -0.1315,
+      "limite_inferior": -0.23489067875048142,
+      "limite_superior": -0.028109321249518593
+    },
+    "mesma_media": [
+      {
+        "tabela": "base",
+        "rtp_teorico": 0.84,
+        "desvio_teorico_lucro": 5.20522814101361,
+        "saldo_medio": 52.1,
+        "saldo_mediano": 0.0,
+        "esgotamento": 0.67
+      },
+      {
+        "tabela": "mesma_media",
+        "rtp_teorico": 0.84,
+        "desvio_teorico_lucro": 4.1151427678757395,
+        "saldo_medio": 44.15,
+        "saldo_mediano": 0.0,
+        "esgotamento": 0.63
+      }
+    ],
+    "exposicao": [
+      {
+        "limite_rodadas": 100,
+        "participantes": 100,
+        "ganho": 0.27,
+        "empate": 0.03,
+        "perda": 0.7,
+        "esgotamento": 0.01,
+        "saldo_medio": 84.2,
+        "saldo_mediano": 75.0,
+        "rodadas_medias": 100.0
+      },
+      {
+        "limite_rodadas": 500,
+        "participantes": 100,
+        "ganho": 0.16,
+        "empate": 0.0,
+        "perda": 0.84,
+        "esgotamento": 0.66,
+        "saldo_medio": 36.25,
+        "saldo_mediano": 0.0,
+        "rodadas_medias": 325.15
+      }
+    ],
+    "sensibilidade": [
+      {
+        "fator_pagamento": 0.5,
+        "rtp_teorico": 0.42,
+        "lucro_esperado": -0.5800000000000001,
+        "chance_premio": 0.04
+      },
+      {
+        "fator_pagamento": 0.75,
+        "rtp_teorico": 0.63,
+        "lucro_esperado": -0.37,
+        "chance_premio": 0.04
+      },
+      {
+        "fator_pagamento": 1.0,
+        "rtp_teorico": 0.84,
+        "lucro_esperado": -0.16000000000000003,
+        "chance_premio": 0.04
+      },
+      {
+        "fator_pagamento": 1.1,
+        "rtp_teorico": 0.924,
+        "lucro_esperado": -0.07599999999999996,
+        "chance_premio": 0.04
+      },
+      {
+        "fator_pagamento": 1.2,
+        "rtp_teorico": 1.008,
+        "lucro_esperado": 0.008000000000000007,
+        "chance_premio": 0.04
+      },
+      {
+        "fator_pagamento": 1.25,
+        "rtp_teorico": 1.05,
+        "lucro_esperado": 0.050000000000000044,
+        "chance_premio": 0.04
+      },
+      {
+        "fator_pagamento": 1.5,
+        "rtp_teorico": 1.26,
+        "lucro_esperado": 0.26,
+        "chance_premio": 0.04
+      }
+    ]
+  }
+}

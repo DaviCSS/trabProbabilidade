@@ -1,0 +1,2 @@
+metodo,N,lucro_medio,limite_inferior,limite_superior
+"normal aproximado (1,96 * s / raiz(N))",10000,-0.1315,-0.23489067875048142,-0.028109321249518593

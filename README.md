@@ -1,1 +1,64 @@
-# trabProbabilidade
+# Máquina Estatística — Trabalho I de Probabilidade e Estatística
+
+Simulador acadêmico de máquina de rolos, com **créditos fictícios** e regras públicas, desenvolvido em Python para a disciplina Probabilidade e Estatística I (IFES – Campus Serra, 2026/2).
+
+**Integrantes:** preencher aqui os nomes dos integrantes antes da entrega.
+
+## Como executar
+
+Tenha Python 3.10 ou superior. No terminal, dentro da pasta deste repositório:
+
+```bash
+python -m pip install -r requirements.txt
+python maquina.py rodada --semente 2026
+python maquina.py todos
+python gerar_relatorio.py
+python -m unittest discover -s tests -v
+```
+
+No Windows, caso `python` não funcione, tente `py` no lugar. A ação `rodada` mostra um tabuleiro 3 × 3, destaca a linha central e informa **prêmio bruto** e **lucro líquido**. `todos` executa os cinco experimentos e os extras, exporta CSV, gráficos e `resultados/resumo.json`. O último comando executa os 10 testes. **Não há plataforma comercial, depósitos nem apostas reais.**
+
+## Regras do modelo
+
+- Três rolos circulares A-B-C-D-E, sorteados por `random.Random` uma vez por sequência, com parada de 0 a 4 equiprovável.
+- Cada coluna mostra as posições `K`, `(K+1) % 5`, `(K+2) % 5`. Só a linha central paga se as três letras forem iguais.
+- Aposta fixa de **1 crédito**. Prêmios: AAA=5, BBB=10, CCC=15, DDD=25, EEE=50; demais combinações=0.
+- Espaço amostral central de 125 resultados; 5 resultados premiados. Probabilidade de prêmio = **4%**.
+- Prêmio esperado **0,84 crédito**, lucro esperado **−0,16 crédito**, RTP teórico **84%**. Esses valores não são de nenhum jogo comercial.
+
+## Experimentos e arquivos
+
+| Parte | Procedimento | Arquivos principais |
+|---|---|---|
+| E1 | 10.000 rodadas, semente 2026 | `experimento1_frequencias.csv`, gráfico de barras |
+| E2 | 3 sequências, sementes 10/2026/123456; pontos 100/1.000/10.000 | `experimento2_medias.csv`, `experimento2_primeiros10.csv`, gráfico de trajetórias |
+| E3 | 100 participantes, saldo 100, limite 500, semente 42 contínua entre pessoas | `experimento3_sessoes.csv`, `experimento3_trajetorias.csv`, gráfico dos cinco primeiros |
+| E4 | 9.999 pares consecutivos do E1 | `experimento4_condicionais.csv` |
+| E5 | Pagamentos base e +10% **nos mesmos resultados de E1** | `experimento5_tabelas.csv`, gráfico RTP |
+
+Todos os CSV estão em **`resultados/`** e os gráficos em **`resultados/graficos/`**. O arquivo `resultados/resumo.json` traz estatísticas, sementes, versão do Python e versão do matplotlib. PDFs em **`relatorio/relatorio.pdf`** e **`relatorio/divulgacao_cientifica.pdf`** (educação científica extra). O relatório é gerado por `gerar_relatorio.py` a partir dos resultados, não possui números digitados manualmente.
+
+## Pontos extras trabalhados
+
+- Intervalo de confiança aproximado de 95% para a média (`extra_intervalo_confianca.csv`): método normal assintótico, `média ± 1,96 × s/√N`, sob independência.
+- Mesmo RTP, riscos diferentes (`extra_mesma_media_riscos.csv`): outra tabela paga 21 em cada tripla e conserva a soma dos pagamentos 105.
+- Limites de exposição (`extra_exposicao.csv`): cenários predefinidos de 100 versus 500 rodadas sobre os mesmos caminhos virtuais.
+- Análise de sensibilidade (`extra_sensibilidade.csv`): 7 fatores de pagamento e relação com RTP/lucro esperado.
+- Validação automatizada: **10 testes** (`python -m unittest discover -s tests -v`).
+- Educação científica: `relatorio/divulgacao_cientifica.pdf` (uma página com números próprios, conceitos e fonte de saúde pública).
+
+Os extras são opções para **até 20 pontos**, sujeitos à avaliação e sem acumular duas vezes o mesmo resultado.
+
+## Método e cuidados de interpretação
+
+`random.Random` utiliza o gerador Mersenne Twister. As sementes não são reiniciadas por rodada. O E2 reaproveita as rodadas do E1, e o E5 usa as mesmas triplas para comparar tabelas. No E3, o gerador permanece no mesmo estado ao passar para o participante seguinte. A taxa de esgotamento é subconjunto das perdas. Nenhum resultado simulado é medida de problemas de saúde ou da situação financeira de famílias brasileiras.
+
+Dados teóricos e experimentais **não precisam coincidir exatamente**. Não selecionar sementes nem excluir rodadas por causa dos resultados. Para nova execução, use versões das bibliotecas indicadas em `requirements.txt` e registre as versões efetivas em `resultados/resumo.json`.
+
+## Transparência do uso de inteligência artificial
+
+Ferramentas de IA foram utilizadas como apoio para **estruturação e implementação das funções, escrita e revisão de código, elaboração de testes, organização dos gráficos, da documentação e do texto do relatório**. Os cálculos e resultados permanecem reproduzíveis; os integrantes devem revisar o material, conferir as fórmulas, compreender o código e personalizar a identificação/autoria antes da entrega. Não foi empregada IA para substituir observações reais ou inventar dados empíricos.
+
+## Fontes e referências
+
+As referências de pesquisa e os limites das conclusões estão no PDF do relatório. As principais são [Organização Mundial da Saúde (2024)](https://www.who.int/news-room/fact-sheets/detail/gambling), [Banco Central do Brasil, Estudo 119/2024](https://www.bcb.gov.br/conteudo/relatorioinflacao/EstudosEspeciais/EE119_Analise_tecnica_sobre_o_mercado_de_apostas_online_no_Brasil_e_o_perfil_dos_apostadores.pdf), [Congresso Nacional, MP 1394/2026](https://www.congressonacional.leg.br/materias/medidas-provisorias/-/mpv/175871) e [Agência Brasil (28/09/2026)](https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/associacoes-de-jogos-acionam-stf-contra-mp-que-proibiu-apostas-online).

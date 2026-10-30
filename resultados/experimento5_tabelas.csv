@@ -1,0 +1,3 @@
+tabela,probabilidade_premio_teorica,frequencia_premio_observada,premio_medio,lucro_medio,rtp_teorico,rtp_observado
+base,0.04,0.0412,0.8685,-0.1315,0.84,0.8685
+premios_mais_10_porcento,0.04,0.0412,0.95535,-0.04464999999999991,0.9240000000000002,0.95535
