@@ -44,7 +44,7 @@ python gerar_relatorio.py
 python -m unittest discover -s tests -v
 ```
 
-No Windows, caso `python` não funcione, tente `py` no lugar. A ação `rodada` mostra um tabuleiro 3 × 3, destaca a linha central e informa **prêmio bruto** e **lucro líquido**. `todos` executa os cinco experimentos e os extras, exporta CSV, gráficos e `resultados/resumo.json`. O último comando executa os 10 testes. **Não há plataforma comercial, depósitos nem apostas reais.**
+No Windows, caso `python` não funcione, tente `py` no lugar. A ação `rodada` mostra um tabuleiro 3 × 3, destaca a linha central e informa **prêmio bruto** e **lucro líquido**. `todos` executa os cinco experimentos e a análise de sensibilidade, exporta CSV, gráficos e `resultados/resumo.json`. O último comando executa os testes automatizados. **Não há plataforma comercial, depósitos nem apostas reais.**
 
 ## Regras do modelo
 
@@ -64,18 +64,16 @@ No Windows, caso `python` não funcione, tente `py` no lugar. A ação `rodada` 
 | E4 | 9.999 pares consecutivos do E1 | `experimento4_condicionais.csv` |
 | E5 | Pagamentos base e +10% **nos mesmos resultados de E1** | `experimento5_tabelas.csv`, gráfico RTP |
 
-Todos os CSV estão em **`resultados/`** e os gráficos em **`resultados/graficos/`**. O arquivo `resultados/resumo.json` traz estatísticas, sementes, versão do Python e versão do matplotlib. PDFs em **`relatorio/relatorio.pdf`** e **`relatorio/divulgacao_cientifica.pdf`** (educação científica extra). O relatório é gerado por `gerar_relatorio.py` a partir dos resultados, não possui números digitados manualmente.
+Todos os CSV estão em **`resultados/`** e os gráficos em **`resultados/graficos/`**. O arquivo `resultados/resumo.json` traz estatísticas, sementes, versão do Python e versão do matplotlib. Relatório em **`relatorio/relatorio.pdf`**. O relatório é gerado por `gerar_relatorio.py` a partir dos resultados, não possui números digitados manualmente.
 
-## Pontos extras trabalhados
+## Pontos extras selecionados
 
-- Intervalo de confiança aproximado de 95% para a média (`extra_intervalo_confianca.csv`): método normal assintótico, `média ± 1,96 × s/√N`, sob independência.
-- Mesmo RTP, riscos diferentes (`extra_mesma_media_riscos.csv`): outra tabela paga 21 em cada tripla e conserva a soma dos pagamentos 105.
-- Limites de exposição (`extra_exposicao.csv`): cenários predefinidos de 100 versus 500 rodadas sobre os mesmos caminhos virtuais.
-- Análise de sensibilidade (`extra_sensibilidade.csv`): 7 fatores de pagamento e relação com RTP/lucro esperado.
-- Validação automatizada: **10 testes** (`python -m unittest discover -s tests -v`).
-- Educação científica: `relatorio/divulgacao_cientifica.pdf` (uma página com números próprios, conceitos e fonte de saúde pública).
+Escolhemos **dois extras**, para facilitar a explicação no relatório:
 
-Os extras são opções para **até 20 pontos**, sujeitos à avaliação e sem acumular duas vezes o mesmo resultado.
+- **Validação automatizada (até 3 pontos):** testes de regras, pagamentos, semente, totais e casos-limite. Executar com `python -m unittest discover -s tests -v`.
+- **Análise de sensibilidade (até 3 pontos):** sete cenários de pagamentos; tabela em `resultados/extra_sensibilidade.csv` e gráfico em `resultados/graficos/extra_sensibilidade.png`.
+
+Os resultados e o método dos dois extras estão sintetizados no relatório.
 
 ## Método e cuidados de interpretação
 

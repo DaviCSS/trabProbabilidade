@@ -15,7 +15,7 @@ class TestNotebook(unittest.TestCase):
         notebook = json.loads(caminho.read_text(encoding="utf-8"))
         celulas = notebook["cells"]
         self.assertEqual(notebook["nbformat"], 4)
-        self.assertEqual(sum(c["cell_type"] == "code" for c in celulas), 10)
+        self.assertEqual(sum(c["cell_type"] == "code" for c in celulas), 9)
 
         preparacao = "".join(celulas[2]["source"])
         # Cada experimento pode ser executado apenas com a preparação.

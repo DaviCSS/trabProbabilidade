@@ -14,7 +14,6 @@ from pathlib import Path
 SIMBOLOS = "ABCDE"
 PAGAMENTOS = {"A": 5, "B": 10, "C": 15, "D": 25, "E": 50}
 PAGAMENTOS_10 = {letra: valor * 1.10 for letra, valor in PAGAMENTOS.items()}
-PAGAMENTOS_MESMA_MEDIA = {letra: 21 for letra in SIMBOLOS}
 RESULTADOS = Path(__file__).parent / "resultados"
 
 
@@ -205,60 +204,15 @@ def experimento_5(rodadas):
     return linhas
 
 
-def extras(rodadas, sessoes_base):
-    # IC aproximado bilateral de 95% para a media de 10 mil observacoes independentes.
-    medidas = resumo_rodadas(rodadas)
-    erro = 1.96 * medidas["desvio_amostral"] / math.sqrt(len(rodadas))
-    intervalo = {"metodo": "normal aproximado (1,96 * s / raiz(N))",
-                 "N": len(rodadas), "lucro_medio": medidas["lucro_medio"],
-                 "limite_inferior": medidas["lucro_medio"] - erro,
-                 "limite_superior": medidas["lucro_medio"] + erro}
-    escrever_csv("extra_intervalo_confianca.csv", list(intervalo), [intervalo])
-
-    # Soma dos cinco pagamentos permanece 105: o RTP teorico segue em 84%.
-    outro, _ = simular_sessoes(pagamentos=PAGAMENTOS_MESMA_MEDIA)
-    risco = []
-    for nome, tabela, sessoes in [("base", PAGAMENTOS, sessoes_base),
-                                  ("mesma_media", PAGAMENTOS_MESMA_MEDIA, outro)]:
-        lucros = [tabela[s] - 1 for s in SIMBOLOS] + [-1] * 120
-        risco.append({"tabela": nome, "rtp_teorico": sum(tabela.values()) / 125,
-                      "desvio_teorico_lucro": statistics.pstdev(lucros),
-                      "saldo_medio": resumo_sessoes(sessoes)["saldo_medio"],
-                      "saldo_mediano": resumo_sessoes(sessoes)["saldo_mediano"],
-                      "esgotamento": resumo_sessoes(sessoes)["esgotamento"]})
-    escrever_csv("extra_mesma_media_riscos.csv", list(risco[0]), risco)
-
-    # Duas regras predefinidas: 100 ou 500 rodadas, usando mesmos 100 caminhos potenciais.
-    gerador = random.Random(2027)
-    exposicao = {100: [], 500: []}
-    for pessoa in range(1, 101):
-        lucros = [rodada(gerador)["lucro"] for _ in range(500)]
-        for limite in (100, 500):
-            saldo, n = 100, 0
-            for lucro in lucros[:limite]:
-                if saldo < 1:
-                    break
-                saldo += lucro
-                n += 1
-            exposicao[limite].append({"participante": pessoa,
-                                      "saldo_final": saldo, "rodadas": n,
-                                      "esgotou": int(saldo < 1),
-                                      "resultado": "ganho" if saldo > 100 else
-                                      "empate" if saldo == 100 else "perda"})
-    comparar = []
-    for limite in (100, 500):
-        resumo = resumo_sessoes(exposicao[limite])
-        comparar.append({"limite_rodadas": limite, **resumo})
-    escrever_csv("extra_exposicao.csv", list(comparar[0]), comparar)
-
+def extra_sensibilidade():
+    """Compara sete tabelas de pagamentos mantendo as probabilidades."""
     cenarios = []
     for fator in (0.50, 0.75, 1.00, 1.10, 1.20, 1.25, 1.50):
-        rtp = 0.84 * fator
+        rtp = sum(PAGAMENTOS.values()) * fator / 125
         cenarios.append({"fator_pagamento": fator, "rtp_teorico": rtp,
                          "lucro_esperado": rtp - 1, "chance_premio": 0.04})
     escrever_csv("extra_sensibilidade.csv", list(cenarios[0]), cenarios)
-    return {"intervalo_confianca": intervalo, "mesma_media": risco,
-            "exposicao": comparar, "sensibilidade": cenarios}
+    return {"sensibilidade": cenarios}
 
 
 def gerar_graficos(tabela1, medias, trajetorias, tabela5, adicionais):
@@ -336,8 +290,7 @@ def executar_todos():
     e3, trajetorias = experimento_3()
     e4 = experimento_4(rodadas)
     e5 = experimento_5(rodadas)
-    sessoes_base, _ = simular_sessoes()
-    adicionais = extras(rodadas, sessoes_base)
+    adicionais = extra_sensibilidade()
     gerar_graficos(tabela1, medias, trajetorias, e5, adicionais)
     import matplotlib
     dados = {"modelo": {"simbolos": SIMBOLOS, "pagamentos": PAGAMENTOS,
@@ -348,8 +301,7 @@ def executar_todos():
                           "biblioteca_sorteio": "random.Random / Mersenne Twister",
                           "matplotlib": matplotlib.__version__,
                           "semente_e1_e4_e5": 2026,
-                          "sementes_e2": [10, 2026, 123456], "semente_e3": 42,
-                          "semente_extra_exposicao": 2027},
+                          "sementes_e2": [10, 2026, 123456], "semente_e3": 42},
              "experimento1": e1, "experimento2": e2, "experimento3": e3,
              "experimento4": e4, "experimento5": e5, "extras": adicionais}
     (RESULTADOS / "resumo.json").write_text(json.dumps(dados, indent=2, ensure_ascii=False), encoding="utf-8")

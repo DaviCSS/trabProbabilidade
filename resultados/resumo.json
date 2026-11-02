@@ -24,8 +24,7 @@
       2026,
       123456
     ],
-    "semente_e3": 42,
-    "semente_extra_exposicao": 2027
+    "semente_e3": 42
   },
   "experimento1": {
     "rodadas": 10000,
@@ -93,7 +92,7 @@
     "perda": 0.75,
     "esgotamento": 0.67,
     "saldo_medio": 52.1,
-    "saldo_mediano": 0.0,
+    "saldo_mediano": 0,
     "rodadas_medias": 339.9
   },
   "experimento4": [
@@ -131,55 +130,6 @@
     }
   ],
   "extras": {
-    "intervalo_confianca": {
-      "metodo": "normal aproximado (1,96 * s / raiz(N))",
-      "N": 10000,
-      "lucro_medio": -0.1315,
-      "limite_inferior": -0.23489067875048142,
-      "limite_superior": -0.028109321249518593
-    },
-    "mesma_media": [
-      {
-        "tabela": "base",
-        "rtp_teorico": 0.84,
-        "desvio_teorico_lucro": 5.20522814101361,
-        "saldo_medio": 52.1,
-        "saldo_mediano": 0.0,
-        "esgotamento": 0.67
-      },
-      {
-        "tabela": "mesma_media",
-        "rtp_teorico": 0.84,
-        "desvio_teorico_lucro": 4.1151427678757395,
-        "saldo_medio": 44.15,
-        "saldo_mediano": 0.0,
-        "esgotamento": 0.63
-      }
-    ],
-    "exposicao": [
-      {
-        "limite_rodadas": 100,
-        "participantes": 100,
-        "ganho": 0.27,
-        "empate": 0.03,
-        "perda": 0.7,
-        "esgotamento": 0.01,
-        "saldo_medio": 84.2,
-        "saldo_mediano": 75.0,
-        "rodadas_medias": 100.0
-      },
-      {
-        "limite_rodadas": 500,
-        "participantes": 100,
-        "ganho": 0.16,
-        "empate": 0.0,
-        "perda": 0.84,
-        "esgotamento": 0.66,
-        "saldo_medio": 36.25,
-        "saldo_mediano": 0.0,
-        "rodadas_medias": 325.15
-      }
-    ],
     "sensibilidade": [
       {
         "fator_pagamento": 0.5,
@@ -194,7 +144,7 @@
         "chance_premio": 0.04
       },
       {
-        "fator_pagamento": 1.0,
+        "fator_pagamento": 1,
         "rtp_teorico": 0.84,
         "lucro_esperado": -0.16000000000000003,
         "chance_premio": 0.04

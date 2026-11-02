@@ -3,7 +3,7 @@ import math
 import random
 import unittest
 
-from maquina import (PAGAMENTOS, PAGAMENTOS_10, PAGAMENTOS_MESMA_MEDIA,
+from maquina import (PAGAMENTOS, PAGAMENTOS_10,
                      experimento_4, rodada, simular_rodadas, simular_sessoes,
                      resumo_sessoes)
 
@@ -60,7 +60,6 @@ class TesteMaquina(unittest.TestCase):
     def test_esperanca_e_rtp(self):
         self.assertAlmostEqual(sum(PAGAMENTOS.values()) / 125, 0.84)
         self.assertAlmostEqual(sum(PAGAMENTOS_10.values()) / 125, 0.924)
-        self.assertEqual(sum(PAGAMENTOS_MESMA_MEDIA.values()), sum(PAGAMENTOS.values()))
 
 
 if __name__ == "__main__":

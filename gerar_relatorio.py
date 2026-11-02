@@ -1,4 +1,4 @@
-"""Gera os PDFs a partir dos resultados, com reportlab."""
+"""Gera o relatório PDF a partir dos resultados, com reportlab."""
 import json
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -192,61 +192,28 @@ def relatorio():
           p("A probabilidade de qualquer prêmio continua 4%. O RTP sobe de 84% a 92,4% e E[X] passa de -0,16 a -0,076, ainda negativos. Um prêmio maior não representa maior frequência nem, por si só, vantagem do jogador.")]
     c.append(PageBreak())
 
-    # 6 extras
-    ci = ext["intervalo_confianca"]
-    riscos = ext["mesma_media"]
-    c += [secao("8. Extras – Intervalo de confiança e riscos"),
-          p("Intervalo de confiança aproximado de 95%: usamos as 10.000 observações independentes do Experimento 1, o desvio-padrão amostral s e a aproximação normal pela média (teorema central do limite). O intervalo foi calculado como média ± 1,96 × s / √N. Não supomos normalidade do lucro de cada rodada; a distribuição é discreta e assimétrica."),
-          tabela(["Média observada", "Limite inferior", "Limite superior", "N"],
-                 [[numero(ci["lucro_medio"],4), numero(ci["limite_inferior"],4),
-                   numero(ci["limite_superior"],4), ci["N"]]],
-                 [4.0*cm, 4.0*cm, 4.0*cm, 3.5*cm]),
-          p("Interpretação: sob repetição independente de amostras do mesmo tamanho, o procedimento de construção cobre a esperança verdadeira em aproximadamente 95% das amostras. Não significa 95% de chance de um apostador ter lucro nessa faixa. Neste caso, a esperança teórica -0,16 é a referência conhecida, não um parâmetro descoberto pela simulação."),
-          secao("8.1. Mesma esperança, riscos diferentes"),
-          p("Construímos uma tabela alternativa que paga 21 créditos em qualquer tripla vencedora. A soma dos cinco pagamentos continua 105, como na tabela-base. Logo ambas têm E[P] = 105/125 = 0,84 e RTP = 84%, mas valores máximos de prêmio e variâncias distintos."),
-          tabela(["Tabela", "RTP teórico", "Desvio teórico X", "Saldo médio", "Esgotamento"],
-                 [[x["tabela"], porcento(x["rtp_teorico"]),
-                   numero(x["desvio_teorico_lucro"],3),
-                   numero(x["saldo_medio"],2), porcento(x["esgotamento"])] for x in riscos],
-                 [3.4*cm, 2.5*cm, 3.6*cm, 2.8*cm, 3.2*cm]),
-          p("A tabela-base concentra pagamentos em um prêmio máximo de 50, enquanto a alternativa paga sempre 21 quando ocorre prêmio. Os lucros médios teóricos coincidem, mas a dispersão dos resultados difere. Também comparamos sessões usando semente 42 e o mesmo modelo de parada. Uma amostra finita de saldos não precisa apresentar risco ordenado exatamente como a dispersão teórica."),
-          secao("8.2. Validação do programa"),
-          p("Foi criada uma suíte unittest com dez verificações: janela circular, cinco pagamentos, ausência de prêmio, desconto da aposta, reprodutibilidade, 10.000 resultados, 9.999 pares, saldo inicial zero, soma das categorias de sessões e esperanças teóricas. Comando: python -m unittest discover -s tests -v."),
-          p("Os dados e gráficos são gerados diretamente pelo script. A lista de versões e sementes está em resultados/resumo.json. O programa não manipula sementes para atingir uma média desejada.")]
-    c.append(PageBreak())
-
-    # 7 extras
-    exposicao = ext["exposicao"]
-    c += [secao("9. Extras – Exposição e sensibilidade"),
-          p("Limites de exposição: antes do sorteio foram fixadas as alternativas de no máximo 100 e 500 rodadas. Geramos 100 caminhos potenciais de 500 rodadas com semente 2027, reaplicando as duas regras ao mesmo caminho de cada participante. Cada sessão para ao esgotar o saldo. O pareamento evita comparar pessoas com trajetórias iniciais diferentes."),
-          tabela(["Limite", "Lucro: ganho", "Perda", "Esgotamento", "Saldo médio", "Rodadas médias"],
-                 [[r["limite_rodadas"], porcento(r["ganho"]), porcento(r["perda"]),
-                   porcento(r["esgotamento"]), numero(r["saldo_medio"],2),
-                   numero(r["rodadas_medias"],1)] for r in exposicao],
-                 [1.8*cm, 2.7*cm, 2.3*cm, 2.9*cm, 2.7*cm, 3.1*cm]),
-          p("A comparação mostra como o horizonte de observação altera a distribuição empírica dos saldos e o número de rodadas. Limitar exposição não muda E[X] por rodada: a esperança permanece -0,16 na tabela-base. É incorreto multiplicar automaticamente a esperança por 500 quando algumas sessões param antes."),
-          secao("9.1. Sete cenários de sensibilidade"),
-          p("Mantivemos as chances e multiplicamos todos os pagamentos por fatores 0,50; 0,75; 1,00; 1,10; 1,20; 1,25; 1,50. Como E[P] é linear, RTP = 0,84 × fator e E[X] = RTP - 1. Um fator de 1,20 cruza 100% de RTP, mostrando que o caráter desfavorável depende da tabela, não apenas da aparência da máquina."),
-          tabela(["Fator", "RTP", "Lucro esperado"],
-                 [[numero(r["fator_pagamento"],2), porcento(r["rtp_teorico"]),
-                   numero(r["lucro_esperado"],3)] for r in ext["sensibilidade"]],
-                 [4.0*cm, 4.5*cm, 7*cm]),
-          Spacer(1, 8),
-          *grafico("extra_sensibilidade.png", "Figura 5. Relação linear entre pagamentos, RTP e limite de equilíbrio.", altura=6.2*cm)]
-    c.append(PageBreak())
+    # Extras escolhidos: somente validação e análise de sensibilidade.
+    c += [secao("8. Extras selecionados"),
+          p("Validação automatizada: usamos testes unittest para verificar tabuleiro circular, cinco pagamentos, rodada sem prêmio, desconto da aposta, reprodução por semente, 10.000 rodadas, 9.999 pares, saldo zero, categorias de 100 participantes e os valores de RTP. Execução: python -m unittest discover -s tests -v."),
+          p("Análise de sensibilidade: foram calculados sete cenários, multiplicando os cinco pagamentos por 0,50; 0,75; 1,00; 1,10; 1,20; 1,25 e 1,50. As chances permanecem em 4%; RTP = 0,84 × fator e E[X] = RTP - 1. O cenário 1,20 supera ligeiramente 100% de RTP, mostrando que alterar pagamentos, mesmo sem mudar as chances, pode mudar a esperança."),
+          tabela(["Fator de pagamento", "RTP teórico", "Lucro esperado"],
+                 [[numero(x["fator_pagamento"],2), porcento(x["rtp_teorico"]),
+                   numero(x["lucro_esperado"],3)] for x in ext["sensibilidade"]],
+                 [5.4*cm, 4.5*cm, 5.6*cm]),
+          p("A tabela e o gráfico completo em resultados/graficos/extra_sensibilidade.png permitem conferir os cenários. Os testes demonstram a consistência da implementação, sem substituir a interpretação dos cinco experimentos.")]
 
     # 8 discussion
-    c += [secao("10. Discussão crítica: mecanismo, renda e saúde"),
+    c += [secao("9. Discussão crítica: mecanismo, renda e saúde"),
           p(f"A matemática responde à pergunta inicial: embora apenas 4% das rodadas tenham prêmio, algumas delas geram lucros de 4 a 49 créditos; ao mesmo tempo, 96% retiram 1 crédito. A soma ponderada dá E[X] = -0,16. No experimento, o lucro médio foi {numero(e1['lucro_medio'],4)}, mas {porcento(e3['ganho'])} dos participantes virtuais do E3 terminaram acima do saldo inicial. Assim, ganhos pontuais e expectativa negativa são compatíveis. Um relato isolado de vitória oculta a distribuição completa e as perdas de outras sessões."),
           p("A OMS (2024) associa danos do jogo a dificuldades financeiras, sofrimento mental, conflitos familiares e desvio de recursos de necessidades básicas [1]. Isso diz respeito a pessoas reais e a múltiplas modalidades, não a uma inferência clínica produzida por nossos personagens simulados. O modelo não mede transtorno do jogo, renda familiar ou comportamento humano."),
-          secao("10.1. O Brasil: dado observado versus estimativa"),
+          secao("9.1. O Brasil: dado observado versus estimativa"),
           p("O Estudo Especial 119/2024 do Banco Central identificou transferências brutas por Pix a empresas de apostas na ordem de R$ 18 a 21 bilhões mensais em 2024 [2]. O indicador mede transferências, não a perda líquida de usuários e não o lucro operacional final. Apresentá-lo como dinheiro perdido confundiria conceitos e exageraria o significado do número. Também não se deve igualar esse agregado a créditos fictícios."),
-          secao("10.2. Política pública e argumentos em disputa"),
+          secao("9.2. Política pública e argumentos em disputa"),
           p("A MP 1.394/2026, publicada em 25 de setembro, estabeleceu proibição da exploração, oferta, intermediação e publicidade das apostas de quota fixa [3]. A página de tramitação do Congresso Nacional registrava a matéria ainda em apreciação na consulta de 30/10/2026; existência de uma MP não equivale a uma decisão judicial final. A defesa de restrições prioriza proteção de saúde e renda, especialmente de grupos vulneráveis. A posição encontra apoio no reconhecimento dos danos pela OMS, mas a eficiência de uma medida particular requer acompanhamento de resultados."),
           p("As entidades ANJL e IBJR solicitaram ao STF a suspensão da MP, segundo a Agência Brasil em 28/09/2026, alegando insegurança jurídica e impactos sobre investimentos [4]. Trata-se de argumento e pedido das entidades, não de decisão do STF nem de prova de que a proibição fracassará. A fiscalização da oferta irregular, a publicidade e o respeito à autonomia integram a controvérsia. Para julgar efeitos concretos da política, seriam necessários dados reais posteriores e desenhos de pesquisa apropriados."),
-          secao("10.3. Responsabilidade em Sistemas de Informação"),
+          secao("9.3. Responsabilidade em Sistemas de Informação"),
           p("Animações, cores e destaque dos maiores prêmios podem tornar a raridade pouco perceptível. Uma interface responsável deveria informar separadamente probabilidade de prêmio, RTP e lucro esperado, em linguagem compreensível, e evitar sugerir que perdas recentes tornaram a próxima vitória mais provável. Transparência técnica e fiscalização são complementares: o código pode estar correto e a comunicação ainda induzir erro."),
-          secao("11. Conclusão e limites"),
+          secao("10. Conclusão e limites"),
           p("Concluímos que a desvantagem econômica é propriedade da distribuição probabilística dos pagamentos, não da ausência de prêmios. A simulação reproduziu padrões coerentes com a teoria, exibindo variação amostral legítima. Nenhum resultado sugere estratégia de lucro ou diagnostica problemas de saúde. A pesquisa documental amplia o debate, sem converter uma máquina didática em representação fiel de um produto comercial ou da população brasileira."),
           p("Uso de IA: houve apoio na implementação das funções e verificações, estruturação e revisão dos textos, geração dos gráficos e documentação. As regras, fórmulas, sementes e saídas ficam disponíveis para conferência dos integrantes; é necessário revisar e personalizar o texto antes de entregar.")]
     c.append(PageBreak())
@@ -266,29 +233,6 @@ def relatorio():
     documento(DESTINO / "relatorio.pdf", c, "Relatório – Máquina Estatística")
 
 
-def divulgacao():
-    e1 = DADOS["experimento1"]
-    e3 = DADOS["experimento3"]
-    c = [p("Você ganhou uma rodada. E o jogo todo?", "titulo"),
-         p("Página de educação científica – resultados próprios, somente créditos fictícios."),
-         secao("Uma vitória não revela a matemática"),
-         p("Nesta máquina de três rolos, há 125 combinações centrais possíveis, mas só 5 pagam prêmio. Por isso, a chance de prêmio a cada rodada é 5/125 = 4%. A maior vitória individual paga 50 créditos; as outras 120 combinações não pagam nada."),
-         secao("O que é o RTP?"),
-         p("RTP é o prêmio médio esperado dividido pela aposta. Aqui cada rodada custa 1 crédito, e o prêmio médio teórico é 0,84. RTP = 84%, enquanto o lucro esperado é 0,84 - 1 = -0,16 crédito. RTP não é chance de ganhar. Não significa que cada pessoa vai recuperar 84% do que apostou."),
-         tabela(["Métrica", "Teoria", "Simulação"],
-                [["Chance de prêmio", "4%", porcento(e1["frequencia_premio"])],
-                 ["RTP", "84%", porcento(e1["rtp_observado"])],
-                 ["Lucro por rodada", "-0,16 crédito", numero(e1["lucro_medio"],4) + " crédito"]],
-                [5.5*cm, 4.2*cm, 5.8*cm]),
-         secao("O que mostram 100 pessoas virtuais?"),
-         p(f"Com saldo inicial de 100 e até 500 rodadas por participante, {porcento(e3['ganho'])} terminaram com ganho, enquanto {porcento(e3['perda'])} tiveram perda. O saldo final médio foi {numero(e3['saldo_medio'],2)} créditos. Ganhos ocasionais e perdas esperadas não são contraditórios."),
-         secao("Importante: simulador não é pesquisa com pessoas"),
-         p("Esses números não medem os problemas de quem aposta na vida real. A OMS relaciona danos do jogo a comprometimento de despesas essenciais, sofrimento mental e conflitos familiares. Consulte a fonte: https://www.who.int/news-room/fact-sheets/detail/gambling"),
-         p("Produzido a partir de dados reproduzíveis de maquina.py. Sem dinheiro real, anúncios ou plataformas de apostas. É uma explicação de probabilidades, não uma recomendação de jogo.")]
-    documento(DESTINO / "divulgacao_cientifica.pdf", c, "Educação Científica – Máquina Estatística")
-
-
 if __name__ == "__main__":
     relatorio()
-    divulgacao()
-    print("PDFs criados em", DESTINO)
+    print("Relatório PDF criado em", DESTINO)
