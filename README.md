@@ -79,4 +79,4 @@ Dados teóricos e experimentais **não precisam coincidir exatamente**. Não sel
 
 ## Transparência do uso de inteligência artificial
 
-Ferramentas de IA foram utilizadas como apoio para **estruturação e implementação das funções, revisão de código, elaboração de testes, organização dos gráficos e da documentação**. Os cálculos e resultados permanecem reproduzíveis; os integrantes devem revisar o material, conferir as fórmulas, compreender o código e personalizar a identificação/autoria antes da entrega. Não foi empregada IA para substituir observações reais ou inventar dados empíricos.
+Ferramentas de IA foram utilizadas como apoio para **estruturação e implementação das funções, revisão de código, elaboração de testes, organização dos gráficos e da documentação**.
