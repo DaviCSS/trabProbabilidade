@@ -1,7 +1,3 @@
-"""Maquina estatistica do Trabalho I de Probabilidade e Estatistica.
-
-Tudo funciona com creditos FICTICIOS. Sem acesso a sites de apostas.
-"""
 import argparse
 import csv
 import json
@@ -282,7 +278,6 @@ def gerar_graficos(tabela1, medias, trajetorias, tabela5, adicionais):
 
 
 def executar_todos():
-    print("Simulador acadêmico - somente créditos fictícios")
     RESULTADOS.mkdir(exist_ok=True)
     rodadas = simular_rodadas(10000, 2026)
     e1, tabela1 = experimento_1(rodadas)

@@ -2,9 +2,9 @@
 
 Simulador acadêmico de máquina de rolos, com **créditos fictícios** e regras públicas, desenvolvido em Python para a disciplina Probabilidade e Estatística I (IFES – Campus Serra, 2026/2).
 
-**Integrantes:** preencher aqui os nomes dos integrantes antes da entrega.
+**Integrantes:** Davi Campos Sutil e Karyna Martins Carbas
 
-## 🎮 Jogar pelo navegador (GitHub Pages)
+## Jogar pelo navegador (GitHub Pages)
 
 **Site do simulador:** https://davicss.github.io/trabProbabilidade/
 
@@ -17,9 +17,7 @@ A versão interativa está em [`docs/`](docs/). É um site estático (HTML, CSS 
 
 O cálculo no navegador usa **Web Crypto**, enquanto o Python usa `random.Random`. Ambos têm as **mesmas regras e probabilidades**, mas não geram a mesma sequência, mesmo se comparados com uma semente numérica. **Os dados da sessão no site não substituem os experimentos reproduzíveis do trabalho**, que ficam no script Python e nos arquivos CSV.
 
-**Para ativar o site no GitHub:** abra *Settings → Pages* no repositório; em **Build and deployment**, escolha **Deploy from a branch**, branch **main**, pasta **/docs**, e clique em **Save**. Depois da publicação, o endereço acima poderá ser aberto. Se quiser visualizar localmente, execute `python -m http.server 8000 --directory docs` e abra `http://localhost:8000`.
-
-## 📓 Jupyter Notebook — execução célula por célula
+## Jupyter Notebook — execução célula por célula
 
 O arquivo **[`Maquina_Estatistica.ipynb`](Maquina_Estatistica.ipynb)** é um **Jupyter Notebook real**, com células de texto (explicação) e código (execução), tabelas e gráficos **dentro do notebook**. Ele substitui o antigo roteiro com separadores `# %%`.
 
@@ -73,8 +71,6 @@ Escolhemos **dois extras**, para facilitar a explicação no relatório:
 - **Validação automatizada (até 3 pontos):** testes de regras, pagamentos, semente, totais e casos-limite. Executar com `python -m unittest discover -s tests -v`.
 - **Análise de sensibilidade (até 3 pontos):** sete cenários de pagamentos; tabela em `resultados/extra_sensibilidade.csv` e gráfico em `resultados/graficos/extra_sensibilidade.png`.
 
-Os resultados e o método dos dois extras estão sintetizados no relatório.
-
 ## Método e cuidados de interpretação
 
 `random.Random` utiliza o gerador Mersenne Twister. As sementes não são reiniciadas por rodada. O E2 reaproveita as rodadas do E1, e o E5 usa as mesmas triplas para comparar tabelas. No E3, o gerador permanece no mesmo estado ao passar para o participante seguinte. A taxa de esgotamento é subconjunto das perdas. Nenhum resultado simulado é medida de problemas de saúde ou da situação financeira de famílias brasileiras.
@@ -83,8 +79,4 @@ Dados teóricos e experimentais **não precisam coincidir exatamente**. Não sel
 
 ## Transparência do uso de inteligência artificial
 
-Ferramentas de IA foram utilizadas como apoio para **estruturação e implementação das funções, escrita e revisão de código, elaboração de testes, organização dos gráficos, da documentação e do texto do relatório**. Os cálculos e resultados permanecem reproduzíveis; os integrantes devem revisar o material, conferir as fórmulas, compreender o código e personalizar a identificação/autoria antes da entrega. Não foi empregada IA para substituir observações reais ou inventar dados empíricos.
-
-## Fontes e referências
-
-As referências de pesquisa e os limites das conclusões estão no PDF do relatório. As principais são [Organização Mundial da Saúde (2024)](https://www.who.int/news-room/fact-sheets/detail/gambling), [Banco Central do Brasil, Estudo 119/2024](https://www.bcb.gov.br/conteudo/relatorioinflacao/EstudosEspeciais/EE119_Analise_tecnica_sobre_o_mercado_de_apostas_online_no_Brasil_e_o_perfil_dos_apostadores.pdf), [Congresso Nacional, MP 1394/2026](https://www.congressonacional.leg.br/materias/medidas-provisorias/-/mpv/175871) e [Agência Brasil (28/09/2026)](https://agenciabrasil.ebc.com.br/justica/noticia/2026-09/associacoes-de-jogos-acionam-stf-contra-mp-que-proibiu-apostas-online).
+Ferramentas de IA foram utilizadas como apoio para **estruturação e implementação das funções, revisão de código, elaboração de testes, organização dos gráficos e da documentação**. Os cálculos e resultados permanecem reproduzíveis; os integrantes devem revisar o material, conferir as fórmulas, compreender o código e personalizar a identificação/autoria antes da entrega. Não foi empregada IA para substituir observações reais ou inventar dados empíricos.
